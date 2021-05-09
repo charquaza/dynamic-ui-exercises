@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <title>Dropdown Menus!</title>
+
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <style>
+            .hidden {
+                display: none;
+            }
+            .dropdown {
+                list-style: none;
+                padding-left: 0;
+            }
+        </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function runApp() {
+                function showDropdown(e) {
+                    var dropdownParent = e.target;
+                    var dropdownElem = dropdownParent.querySelector(".dropdown");
+                    dropdownElem.classList.remove("hidden");
+                }
+                function hideDropdown(e) {
+                    var dropdownParent = e.target;
+                    var dropdownElem = dropdownParent.querySelector(".dropdown");
+                    dropdownElem.classList.add("hidden")
+                }
+
+                var menuItem = document.querySelector("nav ul li:first-child");
+                menuItem.addEventListener("mouseenter", showDropdown);
+                menuItem.addEventListener("mouseleave", hideDropdown);
+
+                //menuItem.onmouseover = function(e) {console.log(e);};
+            });
+        </script>
+    </head>
+    <body>
+        <header>
+            <h1>The Dropdown</h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li>
+                    <p>Items</p>
+                    <ul class="dropdown hidden">
+                        <li>Potion</li>
+                        <li>Escape Rope</li>
+                        <li>Premier Ball</li>
+                        <li>Fresh Water</li>
+                        <li>Safety Goggles</li>
+                        <li>Choice Specs</li>
+                        <li>Focus Band</li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            <p>This page intentionally left blank.</p>
+        </main>
+    </body>
+</html>

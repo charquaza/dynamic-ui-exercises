@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <title>Image Slider</title>
+
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+
+        <style>
+            .slider {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .image-container {
+                width: 500px;
+                height: 500px;
+                margin: 0 20px;
+            }
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+            .hidden {
+                display: none;
+            }
+
+            div.nav-dots {
+                display: flex;
+                justify-content: center;
+            }
+            div.nav-dots div {
+                width: 15px;
+                height: 15px;
+                margin: 15px 50px;
+                border-radius: 50%;
+                background-color: lightgray;
+            }
+            div.nav-dots div.current {
+                background-color: gray;
+            }
+        </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function runApp() {
+                var currIndex = 0;
+                var numOfImages = 3;
+
+                var imageList = document.querySelectorAll(".image-container > img");
+                var dotList = document.querySelectorAll(".nav-dots > div");
+
+                function changeImage(newIndex) {
+                    var currImage = imageList[currIndex];
+                    currImage.classList.add("hidden");
+
+                    var nextImage = imageList[newIndex];
+                    nextImage.classList.remove("hidden");
+                }
+
+                function updateNavDots(nextIndex) {
+                    var currDot = dotList[currIndex];
+                    currDot.classList.remove("current");
+
+                    var nextDot = dotList[nextIndex];
+                    nextDot.classList.add("current");
+                }
+
+                function prevBtnHandler() {
+                    var prevImageIndex = ((currIndex - 1) + numOfImages) % numOfImages;
+
+                    changeImage(prevImageIndex);
+
+                    updateNavDots(prevImageIndex);
+
+                    currIndex = prevImageIndex;
+                }
+
+                function nextBtnHandler() {
+                    var nextImageIndex = (currIndex + 1) % 3;
+
+                    changeImage(nextImageIndex);
+
+                    updateNavDots(nextImageIndex);
+
+                    currIndex = nextImageIndex;
+                }
+
+                function dotClickHandler(click) {
+                    var dot = click.target;
+
+                    if (dot.className !== "current") {
+                        var dotIndex = Number(dot.getAttribute("data-index"));
+
+                        changeImage(dotIndex);
+
+                        updateNavDots(dotIndex);
+
+                        currIndex = dotIndex;
+                    }
+                }
+
+                var prevBtn = document.querySelector("button.prev");
+                prevBtn.addEventListener("click", prevBtnHandler);
+
+                var nextBtn = document.querySelector("button.next");
+                nextBtn.addEventListener("click", nextBtnHandler);
+
+                var dotList = document.querySelectorAll(".nav-dots > div");
+                dotList.forEach(function addListener(dot) {
+                    dot.addEventListener("click", dotClickHandler);
+                });
+
+                setInterval(nextBtnHandler, 5000);
+            });
+        </script>
+    </head>
+    <body>
+        <main>
+            <div class="slider">
+                <button class="prev">&lt;</button>
+
+                <div class="image-container">
+                    <img src="images/favorite-1 copy.jpg">
+                    <img src="images/favorite-3 copy.jpg" class="hidden">
+                    <img src="images/favorite-4 copy.jpg" class="hidden">
+                </div>
+
+                <button class="next">&gt;</button>
+            </div>
+
+            <div class="nav-dots">
+                <div data-index="0" class="current"></div>
+                <div data-index="1"></div>
+                <div data-index="2"></div>
+            </div>
+        </main>
+    </body>
+</html>
